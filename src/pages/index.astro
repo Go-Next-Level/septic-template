@@ -6,7 +6,6 @@ import ServiceCard from '../components/ServiceCard.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import OfferBand from '../components/OfferBand.astro';
 import WarrantyMaterials from '../components/WarrantyMaterials.astro';
 
 const reviews = [
@@ -83,6 +82,24 @@ const schema = {
     </div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 w-full">
+      <!-- Emergency badge — top right -->
+      <a
+        href={`tel:${site.phonePlain}`}
+        class="hidden lg:flex absolute top-4 right-0 xl:-right-4 z-20 items-center gap-3 bg-[#CC1720] text-white pl-5 pr-6 py-3 shadow-2xl hover:bg-[#E31C26] transition-colors duration-200 group anim-fadeInUp delay-300"
+      >
+        <span class="relative flex h-3 w-3 shrink-0">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+        </span>
+        <div class="text-right">
+          <p class="text-[10px] font-bold uppercase tracking-wider opacity-80 leading-none">Got an Emergency?</p>
+          <p class="font-['Barlow_Condensed'] font-black text-lg leading-none mt-0.5">{site.phone}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+        </svg>
+      </a>
+
       <div class="max-w-2xl">
 
         <!-- Eyebrow badge -->
@@ -174,7 +191,31 @@ const schema = {
   ══════════════════════════════════════════════════════ -->
   <TrustBar />
 
-  <OfferBand />
+  <!-- ══════════════════════════════════════════════════════
+       EMERGENCY QUICK-ACTION BAR
+  ══════════════════════════════════════════════════════ -->
+  <section class="bg-[#CC1720] border-y border-white/10" aria-label="Emergency quick action">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="relative flex h-3 w-3 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+          </span>
+          <div>
+            <p class="text-white font-bold text-sm uppercase tracking-wider">24/7 Emergency Service Available</p>
+            <p class="text-white/70 text-xs">Backups · Overflows · System Failures · Odor Issues</p>
+          </div>
+        </div>
+        <a href={`tel:${site.phonePlain}`} class="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#CC1720] font-bold text-sm uppercase tracking-wider hover:bg-white/90 transition-colors duration-200 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+          </svg>
+          Call {site.phone}
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════════════════════════════════════════════
        SERVICES
@@ -254,6 +295,100 @@ const schema = {
   </section>
 
   <WarrantyMaterials />
+
+  <!-- ══════════════════════════════════════════════════════
+       EMERGENCY SERVICES
+  ══════════════════════════════════════════════════════ -->
+  <section class="py-20 lg:py-28 bg-[#0A2447] relative overflow-hidden" aria-labelledby="emergency-heading">
+    <!-- Subtle background pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-[#CC1720] rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#1455A4] rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <div class="inline-flex items-center gap-2 bg-[#CC1720] text-white text-xs font-bold px-4 py-2 uppercase tracking-widest mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+          </span>
+          24/7 Emergency Response
+        </div>
+        <h2 id="emergency-heading" class="font-['Barlow_Condensed'] font-black text-4xl lg:text-6xl text-white uppercase leading-tight mb-6">
+          Septic Emergencies<br />
+          <span class="text-[#CC1720]">Can't Wait.</span>
+        </h2>
+        <p class="text-blue-200/70 leading-relaxed">
+          Backups, overflows, and system failures don't follow business hours. Our emergency crew is on standby nights, weekends, and holidays — because septic disasters don't wait.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+        {[
+          { title: "Sewage Backups", desc: "Toilets, sinks, or tubs backing up with wastewater. This signals a blocked line or full tank that needs immediate attention to prevent contamination.", icon: "M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" },
+          { title: "Drain Field Flooding", desc: "Standing water, soggy ground, or foul odors near your drain field mean effluent is surfacing instead of filtering. Left untreated, this contaminates your property and groundwater.", icon: "M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" },
+          { title: "System Alarm / Alert", desc: "Many modern septic systems have alarms that sound when water levels are too high. Never ignore an alarm — it means your system is in distress and needs professional evaluation now.", icon: "M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" },
+        ].map((item, i) => (
+          <div class="reveal bg-white/5 border border-white/10 p-8 hover:border-[#CC1720]/50 transition-colors duration-300" style={`transition-delay:${i*80}ms`}>
+            <div class="w-12 h-12 rounded bg-[#CC1720] flex items-center justify-center mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
+              </svg>
+            </div>
+            <h3 class="font-['Barlow_Condensed'] font-bold text-xl text-white uppercase mb-3">{item.title}</h3>
+            <p class="text-blue-200/60 text-sm leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+        <div class="space-y-6">
+          <h3 class="font-['Barlow_Condensed'] font-black text-2xl text-white uppercase">
+            What Happens When You Call
+          </h3>
+          <div class="space-y-4">
+            {[
+              { step: "1", title: "Immediate Answer", desc: "A live team member answers — not a voicemail. We gather your address, symptoms, and urgency level." },
+              { step: "2", title: "Fast Dispatch", desc: "Our nearest emergency crew is dispatched immediately. Average response time: under 2 hours for urgent calls." },
+              { step: "3", title: "On-Site Diagnosis", desc: "We assess the situation, stop further damage, and give you a clear repair or pumping plan with upfront pricing." },
+              { step: "4", title: "Restore & Protect", desc: "We fix the immediate issue, document everything, and advise on prevention so it doesn't happen again." },
+            ].map((item) => (
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded bg-[#CC1720] flex items-center justify-center shrink-0">
+                  <span class="font-['Barlow_Condensed'] font-black text-sm text-white">{item.step}</span>
+                </div>
+                <div>
+                  <h4 class="text-white font-bold text-sm mb-1">{item.title}</h4>
+                  <p class="text-blue-200/60 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="bg-[#CC1720] p-8 lg:p-12 text-center reveal">
+          <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+            <span class="text-white text-xs font-bold uppercase tracking-wider">Emergency Line Open Now</span>
+          </div>
+          <p class="text-white/80 text-sm mb-3">Don't wait for a backup to get worse. Call our emergency line any time.</p>
+          <a
+            href={`tel:${site.phonePlain}`}
+            class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-[#CC1720] font-bold text-lg uppercase tracking-wider hover:bg-white/90 transition-colors duration-200 shadow-xl mb-4 w-full"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            {site.phone}
+          </a>
+          <p class="text-white/60 text-xs">Nights · Weekends · Holidays — We Answer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════════════════════════════════════════════
        WHY CHOOSE US (image + points)
