@@ -1,0 +1,23 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  theme?: 'light' | 'dark';
+}
+
+const { eyebrow, title, subtitle, align = 'left', theme = 'light' } = Astro.props;
+const isCenter = align === 'center';
+const isDark = theme === 'dark';
+---
+
+<div class:list={['reveal', isCenter ? 'text-center mx-auto max-w-2xl' : 'max-w-2xl']}>
+  {eyebrow && <p class="text-[#CC1720] text-xs font-bold uppercase tracking-[0.2em] mb-3">{eyebrow}</p>}
+  <h2 class:list={[
+    "font-['Barlow_Condensed'] font-black text-4xl lg:text-5xl uppercase leading-tight heading-accent",
+    isCenter ? 'inline-block' : '',
+    isDark ? 'text-white' : 'text-[#0A2447]'
+  ]} set:html={title} />
+  {subtitle && <p class:list={['mt-6 leading-relaxed', isDark ? 'text-blue-100/70' : 'text-[#5B7394]', isCenter ? 'mx-auto' : '']} set:html={subtitle} />}
+</div>

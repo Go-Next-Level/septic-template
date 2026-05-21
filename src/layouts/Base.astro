@@ -1,0 +1,111 @@
+---
+import { site } from '../config/site';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import EmergencyBanner from '../components/EmergencyBanner.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  schema?: object;
+}
+
+const {
+  title,
+  description = site.description,
+  image = site.ogImage,
+  canonicalURL = new URL(Astro.url.pathname, site.url).toString(),
+  schema,
+} = Astro.props;
+
+const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
+const ogImage = new URL(image, site.url).toString();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#CC1720" />
+
+  <style is:global define:vars={{ brandPrimary: site.colors.primary, brandSecondary: site.colors.secondary }}>
+    :root {
+      --brand-primary: var(--brandPrimary);
+      --brand-secondary: var(--brandSecondary);
+    }
+    [class*="text-[#CC1720]"] { color: var(--brand-primary) !important; }
+    [class*="bg-[#CC1720]"] { background-color: var(--brand-primary) !important; }
+    [class*="border-[#CC1720]"] { border-color: var(--brand-primary) !important; }
+    [class*="shadow-red"] { --tw-shadow-color: color-mix(in srgb, var(--brand-primary) 45%, #000) !important; }
+    [class*="text-[#0A2447]"] { color: var(--brand-secondary) !important; }
+    [class*="bg-[#0A2447]"] { background-color: var(--brand-secondary) !important; }
+    [class*="border-[#0A2447]"] { border-color: var(--brand-secondary) !important; }
+    .section-navy,
+    [class*="from-[#0A2447]"] { --tw-gradient-from: color-mix(in srgb, var(--brand-secondary) 92%, #000) var(--tw-gradient-from-position) !important; }
+    [class*="via-[#0A2447]"] { --tw-gradient-via: color-mix(in srgb, var(--brand-secondary) 75%, transparent) var(--tw-gradient-via-position) !important; }
+    [class*="to-[#0A2447]"] { --tw-gradient-to: color-mix(in srgb, var(--brand-secondary) 30%, transparent) var(--tw-gradient-to-position) !important; }
+  </style>
+
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  {schema && (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  )}
+</head>
+<body class="bg-white text-[#0A1628]">
+  <a href="#main" class="skip-nav">Skip to main content</a>
+
+  {site.emergency && <EmergencyBanner />}
+  <Nav />
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <StickyMobileCTA />
+
+  <script>
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal, .heading-accent').forEach((el) => revealObserver.observe(el));
+  </script>
+</body>
+</html>

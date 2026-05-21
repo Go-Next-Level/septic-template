@@ -1,0 +1,65 @@
+---
+interface Props {
+  faqs: { q: string; a: string }[];
+}
+const { faqs } = Astro.props;
+---
+
+<div class="divide-y divide-[#CDD8E8]">
+  {faqs.map((faq, i) => (
+    <div class="faq-item">
+      <button
+        class="w-full flex items-center justify-between py-5 text-left cursor-pointer group"
+        aria-expanded="false"
+        aria-controls={`faq-answer-${i}`}
+        id={`faq-btn-${i}`}
+      >
+        <span class="text-[#0A2447] font-semibold text-sm md:text-base pr-8 group-hover:text-[#CC1720] transition-colors">
+          {faq.q}
+        </span>
+        <div class="w-7 h-7 rounded-full bg-[#F2F6FC] border border-[#CDD8E8] flex items-center justify-center shrink-0 group-hover:bg-[#CC1720] group-hover:border-[#CC1720] transition-all duration-200">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 text-[#0A2447] group-hover:text-white transition-all duration-300 faq-icon"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </div>
+      </button>
+      <div
+        id={`faq-answer-${i}`}
+        role="region"
+        aria-labelledby={`faq-btn-${i}`}
+        class="faq-answer overflow-hidden max-h-0 transition-all duration-300"
+      >
+        <p class="text-[#5B7394] text-sm leading-relaxed pb-5 pl-0">{faq.a}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const btn = item.querySelector('button')!;
+    const answer = item.querySelector('.faq-answer') as HTMLElement;
+    const icon = item.querySelector('.faq-icon') as HTMLElement;
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-item').forEach((other) => {
+        (other.querySelector('button') as HTMLElement).setAttribute('aria-expanded', 'false');
+        (other.querySelector('.faq-answer') as HTMLElement).style.maxHeight = '0';
+        (other.querySelector('.faq-icon') as HTMLElement).style.transform = '';
+      });
+      if (!open) {
+        btn.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.style.transform = 'rotate(45deg)';
+      }
+    });
+  });
+</script>

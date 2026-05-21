@@ -1,0 +1,48 @@
+---
+import { site } from '../config/site';
+import SectionHeader from './SectionHeader.astro';
+
+const { materials = site.materials, warranty = site.warrantyDetails } = Astro.props;
+---
+
+<section class="py-20 lg:py-28 bg-white" aria-labelledby="materials-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-14 items-start">
+      <div class="lg:sticky lg:top-28">
+        <SectionHeader
+          eyebrow="Materials + Warranty"
+          title={`Built For ${site.address.state}.<br />Backed In Writing.`}
+          subtitle={`A premium septic template needs more than a pretty gallery. This module turns services, inspections, warranty, and cleanup into buyer confidence before the sales call.`}
+        />
+        <div class="reveal mt-8 bg-[#0A2447] p-6 text-white shadow-xl">
+          <p class="text-white/50 text-xs uppercase tracking-widest mb-3">Workmanship Promise</p>
+          <p class="font-['Barlow_Condensed'] font-black text-4xl uppercase leading-none text-[#CC1720]">{site.warranty}</p>
+          <p class="text-blue-100/70 text-sm leading-relaxed mt-3">{warranty.summary}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {materials.map((item, i) => (
+          <article class="reveal card-lift bg-[#F2F6FC] border border-[#CDD8E8] p-6" style={`transition-delay:${i*70}ms`}>
+            <div class="flex items-start justify-between gap-4 mb-5">
+              <div class="w-11 h-11 bg-white border border-[#CDD8E8] flex items-center justify-center text-[#CC1720] font-['Barlow_Condensed'] font-black text-xl">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.18em] text-[#5B7394] font-bold">Premium Spec</span>
+            </div>
+            <h3 class="font-['Barlow_Condensed'] font-bold text-2xl uppercase text-[#0A2447] mb-2">{item.name}</h3>
+            <p class="text-[#5B7394] text-sm leading-relaxed mb-5">{item.description}</p>
+            <ul class="space-y-2">
+              {item.proof.map((proof) => (
+                <li class="flex items-start gap-2 text-xs text-[#0A1628] font-medium">
+                  <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[#CC1720] shrink-0"></span>
+                  {proof}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+---
+interface Props {
+  before?: string;
+  after?: string;
+  beforeAlt?: string;
+  afterAlt?: string;
+  caption?: string;
+}
+const {
+  before = '/images/roofing/residential-shingle-roof-11.jpg',
+  after = '/images/roofing/residential-shingle-roof-12.jpg',
+  beforeAlt = 'Aerial view of damaged residential shingle roof before replacement',
+  afterAlt = 'Aerial view of residential shingle roof after full replacement',
+  caption = 'Residential shingle roof transformation',
+} = Astro.props;
+---
+
+<div class="relative rounded overflow-hidden shadow-lg" aria-label="Before and after comparison slider">
+
+  <div
+    id="before-after"
+    class="relative w-full select-none"
+    style="height: 440px;"
+  >
+    <!-- After image -->
+    <div class="absolute inset-0">
+      <img src={after} alt={afterAlt} class="w-full h-full object-cover" loading="lazy" />
+      <span class="absolute top-4 right-4 bg-[#0A2447] text-white text-xs font-bold px-3 py-1 uppercase tracking-wider rounded-sm">After</span>
+    </div>
+
+    <!-- Before image clipped -->
+    <div id="before-clip" class="absolute inset-0 overflow-hidden" style="width:50%">
+      <div class="relative w-full h-full" style="width:200%">
+        <img src={before} alt={beforeAlt} class="absolute inset-0 w-1/2 h-full object-cover" loading="lazy" />
+      </div>
+      <span class="absolute top-4 left-4 bg-white text-[#0A2447] text-xs font-bold px-3 py-1 uppercase tracking-wider border border-[#CDD8E8] rounded-sm">Before</span>
+    </div>
+
+    <!-- Drag handle -->
+    <div
+      id="drag-handle"
+      class="absolute top-0 bottom-0 w-0.5 bg-white cursor-ew-resize z-10 shadow-lg"
+      style="left:50%"
+      role="slider"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="50"
+      aria-label="Slide to compare before and after"
+      tabindex="0"
+    >
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#CC1720] border-2 border-white flex items-center justify-center shadow-xl">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center text-[#5B7394] text-xs py-3 bg-[#F2F6FC] border-t border-[#CDD8E8]">
+    Drag the slider to compare · {caption}
+  </p>
+</div>
+
+<script>
+  const container = document.getElementById('before-after')!;
+  const clip = document.getElementById('before-clip')!;
+  const handle = document.getElementById('drag-handle')!;
+  let dragging = false;
+
+  function setPosition(x: number) {
+    const rect = container.getBoundingClientRect();
+    let pct = ((x - rect.left) / rect.width) * 100;
+    pct = Math.max(2, Math.min(98, pct));
+    clip.style.width = pct + '%';
+    handle.style.left = pct + '%';
+    handle.setAttribute('aria-valuenow', String(Math.round(pct)));
+  }
+
+  handle.addEventListener('mousedown', () => { dragging = true; });
+  handle.addEventListener('touchstart', () => { dragging = true; }, { passive: true });
+  window.addEventListener('mousemove', (e) => { if (dragging) setPosition(e.clientX); });
+  window.addEventListener('touchmove', (e) => { if (dragging) setPosition(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  window.addEventListener('touchend', () => { dragging = false; });
+  handle.addEventListener('keydown', (e) => {
+    const val = parseFloat(handle.getAttribute('aria-valuenow') ?? '50');
+    if (e.key === 'ArrowLeft') setPosition(container.getBoundingClientRect().left + ((val - 2) / 100) * container.offsetWidth);
+    if (e.key === 'ArrowRight') setPosition(container.getBoundingClientRect().left + ((val + 2) / 100) * container.offsetWidth);
+  });
+</script>
